@@ -20,8 +20,7 @@ namespace MonkeBazooka.Core
             {
                 MissileRigidbody = GetComponent<Rigidbody>();
             }
-            MissileRigidbody.velocity = GorillaLocomotion.Player.Instance.GetComponent<Rigidbody>().velocity * 0.9f;
-
+            
             MissileSpeaker = GetComponentInChildren<AudioSource>();
 
             raycastPoint = transform.Find("raycastPoint");
