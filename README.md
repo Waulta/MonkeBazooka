@@ -23,8 +23,6 @@ Enable & Disable the Bazooka using HauntedModMenu/Computer Interface Menu
 
 __*Disabling through HauntedModMenu will cause the ComputerInterface option to disappear when disabled. <br /> Reenable through HauntedModMenu to bring back the ComputerInterface Menu*__
 
-![Alt Text](https://github.com/Waulta/MonkeBazooka/blob/master/Gifs/MBToggle.gif)
-
 ## *Explosion Force & Current Hand Customization:*
 Modify Explosion Force & Current Held Hand using the Computer Interface menu.
 
