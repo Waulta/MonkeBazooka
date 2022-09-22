@@ -28,4 +28,4 @@ Modify Explosion Force & Current Held Hand using the Computer Interface menu.
 
 ![Alt Text](https://github.com/Waulta/MonkeBazooka/blob/master/Gifs/MBHandSwitch.gif)
 
-## *This product is not affiliated with Gorilla Tag or Another Axiom LLC and is not endorsed or otherwise sponsored by Another Axiom LLC. Portions of the materials contained herein are property of Another Axiom LLC. ©2021 Another Axiom LLC.*
+### *This product is not affiliated with Gorilla Tag or Another Axiom LLC and is not endorsed or otherwise sponsored by Another Axiom LLC. Portions of the materials contained herein are property of Another Axiom LLC. ©2021 Another Axiom LLC.*
