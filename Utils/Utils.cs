@@ -29,8 +29,8 @@ namespace MonkeBazooka.Utils
 
         public static void GetVariables()
         {
-            RightHandTransform = GameObject.Find("OfflineVRRig/Actual Gorilla/rig/body/shoulder.R/upper_arm.R/forearm.R/hand.R/palm.01.R").transform;
-            LeftHandTransform = GameObject.Find("OfflineVRRig/Actual Gorilla/rig/body/shoulder.L/upper_arm.L/forearm.L/hand.L/palm.01.L").transform;
+            RightHandTransform = GameObject.Find("palm.01.R").transform;
+            LeftHandTransform = GameObject.Find("palm.01.L").transform;
             MissileLayerMask = LayerMask.GetMask("Default", "Gorilla Object");
             FakeMissile = Bazooka.transform.Find("FakeMissile").gameObject;
         }
