@@ -2,7 +2,7 @@
 
 __Soar to great new heights using the Gibbon approved *Monke Bazooka!*__ <br /> *Inspired by the Rocket Launcher from Team Fortress 2* <br /> *Bazooka model hand crafted by antoca#8566*
 
-__*If mod is updated but doesnt work then remove all cheats/outdated mods from your Gorilla Tag\BepInEx\plugins folder*__
+__*If your game closes with the mod installed please remove all your cheats.*__
 
 ## *Controls:*
 
