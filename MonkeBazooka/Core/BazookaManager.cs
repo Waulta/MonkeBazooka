@@ -112,13 +112,11 @@ namespace MonkeBazooka.Core
 				MBUtils.BazookaPrefab = assetBundle.LoadAsset<GameObject>("Launcher");
 				MBUtils.MissilePrefab = assetBundle.LoadAsset<GameObject>("realMissile");
 				MBUtils.ExplosionPrefab = assetBundle.LoadAsset<GameObject>("explosion");
-                
-				MBUtils.Bazooka = Instantiate<GameObject>(MBUtils.BazookaPrefab);
+
+				MBUtils.Bazooka = Object.Instantiate(MBUtils.BazookaPrefab);
 				MBUtils.BazookaController = MBUtils.Bazooka.AddComponent<BazookaController>();
                 
 				assetBundle.Unload(false);
-				assetBundle = null;
-				manifestResourceStream = null;
 
 				if (!MBUtils.LeftHandTransform)
 					MBUtils.GetVariables();

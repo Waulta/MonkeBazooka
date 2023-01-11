@@ -38,10 +38,7 @@ namespace MonkeBazooka.Core
         void FixedUpdate()
         {
             Collider[] CollidedObjects = Physics.OverlapBox(transform.position, BazookaController.missileSize, transform.rotation, MBUtils.MissileLayerMask);
-            if (CollidedObjects.Length > 0)
-            {
-                Explode();
-            }
+            if (CollidedObjects.Length > 0) Explode();
             MissileRigidbody.AddForce(-transform.right * BazookaController.MissileSpeed, ForceMode.VelocityChange);
         }
 
@@ -60,7 +57,7 @@ namespace MonkeBazooka.Core
             
             foreach (Collider Collider in NearbyColliders)
             {
-                if(Collider.gameObject.name == "Body Collider")
+                if (Collider.gameObject.name.Contains("Body") || Collider.gameObject == GorillaLocomotion.Player.Instance.bodyCollider)
                 {
                     PlayerRigidBody.AddExplosionForce(MBConfig.ExplosionForce * 10000, transform.position, BazookaController.ExplosionRadius);
                 }

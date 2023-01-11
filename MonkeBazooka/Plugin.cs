@@ -7,6 +7,7 @@ using System.Reflection;
 using MonkeBazooka.Utils;
 using MonkeBazooka.Core;
 
+// TODO: Clean up this entire script
 namespace MonkeBazooka
 {
 	[BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
@@ -17,7 +18,7 @@ namespace MonkeBazooka
     public class MonkeBazookaPlugin : BaseUnityPlugin
 	{
         public static MonkeBazookaPlugin Instance;
-        
+       
         private void Awake()
         {
             Instance = this;

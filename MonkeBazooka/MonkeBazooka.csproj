@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\launcher" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\launcher" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>$(BepInExAssemblyPath)\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GameAssemblyPath)\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>$(BepInExAssemblyPath)\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Harmony">
+      <HintPath>$(BepInExAssemblyPath)\BepInEx.Harmony.dll</HintPath>
+    </Reference>
+	<Reference Include="PhotonUnityNetworking">
+      <HintPath>$(GameAssemblyPath)\PhotonUnityNetworking.dll</HintPath>
+	</Reference>
+    <Reference Include="Bepinject">
+      <HintPath>$(PluginsPath)\Bepinject-Auros\Bepinject.dll</HintPath>
+    </Reference>
+    <Reference Include="ComputerInterface">
+      <HintPath>$(PluginsPath)\ComputerInterface\ComputerInterface.dll</HintPath>
+	</Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(PluginsPath)\ComputerInterface\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.XRModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+	<Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Utilla">
+      <HintPath>$(PluginsPath)\Utilla\Utilla.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject">
+      <HintPath>$(PluginsPath)\Extenject\Zenject.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject-usage">
+      <HintPath>$(PluginsPath)\Extenject\Zenject-usage.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

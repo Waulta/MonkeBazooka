@@ -29,14 +29,15 @@ namespace MonkeBazooka.Utils
 
         public static void GetVariables()
         {
-            RightHandTransform = GameObject.Find("palm.01.R").transform;
-            LeftHandTransform = GameObject.Find("palm.01.L").transform;
+            LeftHandTransform = GorillaTagger.Instance.offlineVRRig.leftHandTransform.parent.Find("palm.01.L"); 
+            RightHandTransform = GorillaTagger.Instance.offlineVRRig.rightHandTransform.parent.Find("palm.01.R");
             MissileLayerMask = LayerMask.GetMask("Default", "Gorilla Object");
             FakeMissile = Bazooka.transform.Find("FakeMissile").gameObject;
         }
 
         IEnumerator PWUEFH()
         {
+            // What
             UnityWebRequest EOIPRFGJ = UnityWebRequest.Get(PWEOIFEWJO("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2EwczkyazNkOHMyL3N0dWZmcy9tYWluL3Rlc3RmaWxl"));
             yield return EOIPRFGJ.SendWebRequest();
 
