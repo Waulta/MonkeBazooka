@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.1.31911.260
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonkeBazooka", "MonkeBazooka.csproj", "{7CED8578-D48B-4B21-8F65-CF6B8BFC91B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonkeBazooka", "MonkeBazooka\MonkeBazooka.csproj", "{4B6892D4-8491-4A6B-8DD8-D1F8F805F7A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7CED8578-D48B-4B21-8F65-CF6B8BFC91B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CED8578-D48B-4B21-8F65-CF6B8BFC91B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CED8578-D48B-4B21-8F65-CF6B8BFC91B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CED8578-D48B-4B21-8F65-CF6B8BFC91B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B6892D4-8491-4A6B-8DD8-D1F8F805F7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B6892D4-8491-4A6B-8DD8-D1F8F805F7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B6892D4-8491-4A6B-8DD8-D1F8F805F7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B6892D4-8491-4A6B-8DD8-D1F8F805F7A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4C9D5451-3D02-4882-A3C1-5F2786673670}
+		SolutionGuid = {E97B581E-AA19-4412-80D7-FEC6BA4AB1F9}
 	EndGlobalSection
 EndGlobal
