@@ -8,12 +8,11 @@ namespace MonkeBazooka.Core
 {
 	public class BazookaManager : MonoBehaviourPunCallbacks
 	{
+        public static BazookaManager Instance { get; private set; }
 
-		public bool initialized = false;
+        public bool initialized = false;
 
-		public static BazookaManager Instance { get; private set; }
-
-		private void Awake()
+		internal void Awake()
 		{
 			if (Instance != null && Instance != this)
 				Destroy(this);
@@ -57,7 +56,7 @@ namespace MonkeBazooka.Core
 			Toggle(MBConfig.Enabled);
 		}
 
-        public void UpdateLeft()
+        public void UpdateHandState()
         {
             MBConfig.Left = !MBConfig.Left;
 			Toggle(MBConfig.Enabled);
@@ -108,12 +107,13 @@ namespace MonkeBazooka.Core
 			{
 				Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("MonkeBazooka.Resources.launcher");
 				AssetBundle assetBundle = AssetBundle.LoadFromStream(manifestResourceStream);
-                
-				MBUtils.BazookaPrefab = assetBundle.LoadAsset<GameObject>("Launcher");
-				MBUtils.MissilePrefab = assetBundle.LoadAsset<GameObject>("realMissile");
-				MBUtils.ExplosionPrefab = assetBundle.LoadAsset<GameObject>("explosion");
 
-				MBUtils.Bazooka = Object.Instantiate(MBUtils.BazookaPrefab);
+                // Small yet unnecessary change, same for a lot of other changes, but I just like it better this way :/
+                MBUtils.BazookaPrefab = assetBundle.LoadAsset("Launcher") as GameObject;
+                MBUtils.MissilePrefab = assetBundle.LoadAsset("realMissile") as GameObject;
+                MBUtils.ExplosionPrefab = assetBundle.LoadAsset("explosion") as GameObject;
+
+                MBUtils.Bazooka = Object.Instantiate(MBUtils.BazookaPrefab);
 				MBUtils.BazookaController = MBUtils.Bazooka.AddComponent<BazookaController>();
                 
 				assetBundle.Unload(false);
@@ -137,8 +137,7 @@ namespace MonkeBazooka.Core
 			}
 			else
             {
-				if (MBUtils.Bazooka != null)
-					Toggle(MBConfig.Enabled);
+				if (MBUtils.Bazooka != null) Toggle(MBConfig.Enabled);
                 
                 Debug.Log($"MonkeBazooka already initialized setting Bazooka to {(MBConfig.Enabled ? "active." : "disabled.")}");
             }

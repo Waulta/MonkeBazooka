@@ -18,11 +18,8 @@ namespace MonkeBazooka.ComputerInterface
             instance = this;
 
             selectionHandler = new UISelectionHandler(EKeyboardKey.Up, EKeyboardKey.Down, EKeyboardKey.Enter);
-
             selectionHandler.MaxIdx = 2;
-
             selectionHandler.OnSelected += OnEntrySelected;
-
             selectionHandler.ConfigureSelectionIndicator($"<color=#{highlightColour}>></color> ", "", "  ", "");
         }
 
@@ -75,7 +72,7 @@ namespace MonkeBazooka.ComputerInterface
                         break;
                     case 1:
                         if (MBConfig.Modded)
-                            BazookaManager.Instance.UpdateLeft();
+                            BazookaManager.Instance.UpdateHandState();
                         UpdateScreen();
                         break;
                 }
@@ -98,11 +95,11 @@ namespace MonkeBazooka.ComputerInterface
                     {
                         case EKeyboardKey.Left:
                             if (MBConfig.Modded)
-                                BazookaManager.Instance.UpdateLeft();
+                                BazookaManager.Instance.UpdateHandState();
                             break;
                         case EKeyboardKey.Right:
                             if (MBConfig.Modded)
-                                BazookaManager.Instance.UpdateLeft();
+                                BazookaManager.Instance.UpdateHandState();
                             break;
                     }
                     UpdateScreen();

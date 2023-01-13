@@ -2,12 +2,6 @@
 using UnityEngine.XR;
 using MonkeBazooka.Utils;
 
-public enum BazookaState
-{
-    Unprimed,
-    Primed,
-}
-
 namespace MonkeBazooka.Core
 {
     public class BazookaController : MonoBehaviour
@@ -32,10 +26,16 @@ namespace MonkeBazooka.Core
 
         public static Vector3 missileSize = new Vector3(0.35f, 0.075f, 0.075f);
 
+        // You can include enums and even other classes in classes so that's what I do most the time 
+        public enum BazookaState
+        {
+            Unprimed,
+            Primed,
+        }
 
         public static BazookaState MyState = BazookaState.Primed;
 
-        void FixedUpdate()
+        internal void LateUpdate()
         {
  
             if (MBConfig.Left)
@@ -53,10 +53,7 @@ namespace MonkeBazooka.Core
                 switch (MyState)
                 {
                     case BazookaState.Unprimed:
-                        if (!XButtonDown && LeftTriggerValue < 0.5f && !LeftFiredOnce)
-                        {
-                            LeftFiredOnce = true;
-                        }
+                        if (!XButtonDown && LeftTriggerValue < 0.5f && !LeftFiredOnce) LeftFiredOnce = true;
                         if (!XButtonDown || !LeftFiredOnce) return;
                         LeftFiredOnce = false;
                         PrimeMissle();
@@ -83,10 +80,7 @@ namespace MonkeBazooka.Core
                 switch (MyState)
                 {
                     case BazookaState.Unprimed:
-                        if (!AButtonDown && RightTriggerValue < 0.5f && !RightFiredOnce)
-                        {
-                            RightFiredOnce = true;
-                        }
+                        if (!AButtonDown && RightTriggerValue < 0.5f && !RightFiredOnce) RightFiredOnce = true;
                         if (!AButtonDown || !RightFiredOnce) return;
                         RightFiredOnce = false;
                         PrimeMissle();
@@ -102,19 +96,12 @@ namespace MonkeBazooka.Core
 
         private void FireMissile()
         {
-            GameObject ClonedMissile = Instantiate<GameObject>(MBUtils.MissilePrefab, MBUtils.FakeMissile.transform.position, MBUtils.FakeMissile.transform.rotation);
+            GameObject ClonedMissile = Instantiate(MBUtils.MissilePrefab, MBUtils.FakeMissile.transform.position, MBUtils.FakeMissile.transform.rotation);
             MBUtils.FakeMissile.SetActive(false);
             ClonedMissile.AddComponent<MissileController>();
 
-            if(MBConfig.Left)
-            {
-                ClonedMissile.transform.localScale = new Vector3(ClonedMissile.transform.localScale.x, ClonedMissile.transform.localScale.y, ClonedMissile.transform.localScale.z * -1);
-                GorillaTagger.Instance.StartVibration(true, HapticStrength, HapticDuration);
-            }
-            else
-            {
-                GorillaTagger.Instance.StartVibration(false, HapticStrength, HapticDuration);
-            }
+            if(MBConfig.Left) ClonedMissile.transform.localScale = new Vector3(ClonedMissile.transform.localScale.x, ClonedMissile.transform.localScale.y, ClonedMissile.transform.localScale.z * -1);
+            GorillaTagger.Instance.StartVibration(MBConfig.Left, HapticStrength, HapticDuration);
         }
 
         private void PrimeMissle()

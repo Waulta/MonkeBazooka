@@ -13,8 +13,8 @@ namespace MonkeBazooka.Core
         public Transform raycastPoint;
 
         public AudioSource MissileSpeaker;
-        
-        void Awake()
+
+        internal void Awake()
         {
             if (MissileRigidbody == null)
             {
@@ -35,14 +35,14 @@ namespace MonkeBazooka.Core
             MissileSpeaker.PlayOneShot(MissileSpeaker.clip);
         }
 
-        void FixedUpdate()
+        internal void FixedUpdate()
         {
             Collider[] CollidedObjects = Physics.OverlapBox(transform.position, BazookaController.missileSize, transform.rotation, MBUtils.MissileLayerMask);
             if (CollidedObjects.Length > 0) Explode();
             MissileRigidbody.AddForce(-transform.right * BazookaController.MissileSpeed, ForceMode.VelocityChange);
         }
 
-        void Explode()
+        private void Explode()
         {
             GameObject ClonedExplosion = Instantiate<GameObject>(MBUtils.ExplosionPrefab, transform.position, transform.rotation);
             Knockback();
@@ -50,7 +50,7 @@ namespace MonkeBazooka.Core
             Destroy(gameObject);
         }
 
-        void Knockback()
+        private void Knockback()
         {
             LayerMask KnockbackLayerMask = LayerMask.GetMask("Gorilla Body Collider");
             Collider[] NearbyColliders = Physics.OverlapSphere(transform.position, BazookaController.ExplosionRadius, KnockbackLayerMask);
