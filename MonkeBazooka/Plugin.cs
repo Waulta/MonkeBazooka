@@ -47,11 +47,6 @@ namespace MonkeBazooka
             }
         }
 
-        internal void LateUpdate()
-        {
-            if (GetComponent<MBUtils>() == null) gameObject.AddComponent<MBUtils>();
-        }
-
         internal void OnDisable()
         {
             if (BazookaManager.Instance == null) return;

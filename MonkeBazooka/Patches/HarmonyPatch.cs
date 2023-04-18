@@ -1,4 +1,5 @@
 ﻿using MonkeBazooka.Core;
+using MonkeBazooka.Utils;
 using System.Collections;
 
 // https://github.com/legoandmars/Utilla/blob/78c9ef1f18537e48fa7e27c601c118155f463769/Utilla/HarmonyPatches/Patches/PostInitializedPatch.cs
@@ -12,9 +13,10 @@ namespace MonkeBazooka.Patches
 
         internal static IEnumerator Delay(GorillaTagger __instance)
         {
-            __instance.gameObject.AddComponent<BazookaManager>();
             yield return 0;
 
+            __instance.gameObject.AddComponent<MBUtils>();
+            __instance.gameObject.AddComponent<BazookaManager>();
         }
     }
 }
