@@ -30,6 +30,7 @@ namespace MonkeBazooka
 
         internal void OnEnable()
         {
+            if (BazookaManager.Instance == null) return;
             try
             {
                 if (MBConfig.Modded)
@@ -53,6 +54,7 @@ namespace MonkeBazooka
 
         internal void OnDisable()
         {
+            if (BazookaManager.Instance == null) return;
             try
             {
                 MBConfig.Enabled = false;
