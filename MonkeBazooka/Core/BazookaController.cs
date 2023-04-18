@@ -2,12 +2,6 @@
 using UnityEngine.XR;
 using MonkeBazooka.Utils;
 
-public enum BazookaState
-{
-    Unprimed,
-    Primed,
-}
-
 namespace MonkeBazooka.Core
 {
     public class BazookaController : MonoBehaviour
@@ -20,10 +14,10 @@ namespace MonkeBazooka.Core
 
         public bool RightFiredOnce = false;
         public bool LeftFiredOnce = false;
-        
+
         public float LeftTriggerValue;
         public float RightTriggerValue;
-        
+
         public bool AButtonDown = false;
         public bool XButtonDown = false;
 
@@ -32,15 +26,20 @@ namespace MonkeBazooka.Core
 
         public static Vector3 missileSize = new Vector3(0.35f, 0.075f, 0.075f);
 
+        public enum BazookaState
+        {
+            Unprimed,
+            Primed,
+        }
 
         public static BazookaState MyState = BazookaState.Primed;
 
-        void FixedUpdate()
+        internal void LateUpdate()
         {
- 
+
             if (MBConfig.Left)
             {
-                if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.Head).name == "Oculus Rift")
+                if (InputDevices.GetDeviceAtXRNode(XRNode.Head).name.Contains("Oculus"))
                 {
                     InputDevices.GetDeviceAtXRNode(LNode).TryGetFeatureValue(CommonUsages.trigger, out LeftTriggerValue);
                     InputDevices.GetDeviceAtXRNode(LNode).TryGetFeatureValue(CommonUsages.secondaryButton, out XButtonDown);
@@ -53,10 +52,7 @@ namespace MonkeBazooka.Core
                 switch (MyState)
                 {
                     case BazookaState.Unprimed:
-                        if (!XButtonDown && LeftTriggerValue < 0.5f && !LeftFiredOnce)
-                        {
-                            LeftFiredOnce = true;
-                        }
+                        if (!XButtonDown && LeftTriggerValue < 0.5f && !LeftFiredOnce) LeftFiredOnce = true;
                         if (!XButtonDown || !LeftFiredOnce) return;
                         LeftFiredOnce = false;
                         PrimeMissle();
@@ -70,7 +66,7 @@ namespace MonkeBazooka.Core
             }
             else
             {
-                if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.Head).name == "Oculus Rift")
+                if (InputDevices.GetDeviceAtXRNode(XRNode.Head).name.Contains("Oculus"))
                 {
                     InputDevices.GetDeviceAtXRNode(RNode).TryGetFeatureValue(CommonUsages.trigger, out RightTriggerValue);
                     InputDevices.GetDeviceAtXRNode(RNode).TryGetFeatureValue(CommonUsages.secondaryButton, out AButtonDown);
@@ -83,10 +79,7 @@ namespace MonkeBazooka.Core
                 switch (MyState)
                 {
                     case BazookaState.Unprimed:
-                        if (!AButtonDown && RightTriggerValue < 0.5f && !RightFiredOnce)
-                        {
-                            RightFiredOnce = true;
-                        }
+                        if (!AButtonDown && RightTriggerValue < 0.5f && !RightFiredOnce) RightFiredOnce = true;
                         if (!AButtonDown || !RightFiredOnce) return;
                         RightFiredOnce = false;
                         PrimeMissle();
@@ -102,18 +95,12 @@ namespace MonkeBazooka.Core
 
         private void FireMissile()
         {
-            GameObject ClonedMissile = Instantiate<GameObject>(MBUtils.MissilePrefab, MBUtils.FakeMissile.transform.position, MBUtils.FakeMissile.transform.rotation);
+            GameObject ClonedMissile = Instantiate(MBUtils.MissilePrefab, MBUtils.FakeMissile.transform.position, MBUtils.FakeMissile.transform.rotation);
             MBUtils.FakeMissile.SetActive(false);
             ClonedMissile.AddComponent<MissileController>();
-            if(MBConfig.Left)
-            {
-                ClonedMissile.transform.localScale = new Vector3(ClonedMissile.transform.localScale.x, ClonedMissile.transform.localScale.y, ClonedMissile.transform.localScale.z * -1);
-                GorillaTagger.Instance.StartVibration(true, HapticStrength, HapticDuration);
-            }
-            else
-            {
-                GorillaTagger.Instance.StartVibration(false, HapticStrength, HapticDuration);
-            }
+
+            if (MBConfig.Left) ClonedMissile.transform.localScale = new Vector3(ClonedMissile.transform.localScale.x, ClonedMissile.transform.localScale.y, ClonedMissile.transform.localScale.z * -1);
+            GorillaTagger.Instance.StartVibration(MBConfig.Left, HapticStrength, HapticDuration);
         }
 
         private void PrimeMissle()

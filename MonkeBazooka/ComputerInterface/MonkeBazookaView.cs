@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using Utilla;
+using System.Text;
 using ComputerInterface;
 using ComputerInterface.ViewLib;
-using Photon.Pun;
-using UnityEngine;
-using MonkeBazooka.Utils;
 using MonkeBazooka.Core;
+using MonkeBazooka.Utils;
 
 namespace MonkeBazooka.ComputerInterface
 {
@@ -21,11 +18,8 @@ namespace MonkeBazooka.ComputerInterface
             instance = this;
 
             selectionHandler = new UISelectionHandler(EKeyboardKey.Up, EKeyboardKey.Down, EKeyboardKey.Enter);
-
             selectionHandler.MaxIdx = 2;
-
             selectionHandler.OnSelected += OnEntrySelected;
-
             selectionHandler.ConfigureSelectionIndicator($"<color=#{highlightColour}>></color> ", "", "  ", "");
         }
 
@@ -37,34 +31,31 @@ namespace MonkeBazooka.ComputerInterface
 
         public void UpdateScreen()
         {
-            SetText(str =>
+            StringBuilder str = new StringBuilder();
+
+            str.BeginCenter();
+            str.MakeBar('-', SCREEN_WIDTH, 0, "ffffff10");
+            str.AppendClr("Monke Bazooka", highlightColour).EndColor().AppendLine();
+            str.AppendLine("By Waulta");
+            str.MakeBar('-', SCREEN_WIDTH, 0, "ffffff10");
+            str.EndAlign().AppendLines(1);
+
+            str.AppendLine(selectionHandler.GetIndicatedText(0, $"<color={(MBConfig.Enabled ? string.Format("#{0}>[Enabled]", highlightColour) : "red>[Disabled]")}</color>"));
+            str.AppendLines(1);
+
+            str.AppendClr("  Selected Hand:", highlightColour).EndColor().AppendLine();
+            str.AppendLine(selectionHandler.GetIndicatedText(1, $"<color={(MBConfig.Left ? "white>[Left]" : "white>[Right]")}</color>"));
+            str.AppendLines(1);
+            str.AppendClr("  Explosion Force:", highlightColour).EndColor().AppendLine();
+            str.AppendLine(selectionHandler.GetIndicatedText(2, $"{MBConfig.ExplosionForce} {(MBConfig.ExplosionForce == 4f ? "(Default)" : "")}"));
+
+            if (!MBConfig.Modded)
             {
-                str.BeginCenter();
-                str.MakeBar('-', SCREEN_WIDTH, 0, "ffffff10");
-                str.AppendClr("Monke Bazooka", highlightColour).EndColor().AppendLine();
-                str.AppendLine("By Waulta");
-                str.MakeBar('-', SCREEN_WIDTH, 0, "ffffff10");
-                str.EndAlign().AppendLines(1);
-                str.AppendLine(selectionHandler.GetIndicatedText(0, $"<color={(MBConfig.Enabled ? string.Format("#{0}>[Enabled]", highlightColour) : "red>[Disabled]")}</color>"));
-                str.AppendLines(1);
-                str.AppendClr("  Selected Hand:", highlightColour).EndColor().AppendLine();
-                str.AppendLine(selectionHandler.GetIndicatedText(1, $"<color={(MBConfig.Left ? "white>[Left]" : "white>[Right]")}</color>"));
-                str.AppendLines(1);
-                str.AppendClr("  Explosion Force:", highlightColour).EndColor().AppendLine();                
-                if (MBConfig.ExplosionForce == 4f)
-                {
-                    str.AppendLine(selectionHandler.GetIndicatedText(2, "4 (Default)"));
-                }
-                else
-                {
-                    str.AppendLine(selectionHandler.GetIndicatedText(2, MBConfig.ExplosionForce.ToString()));
-                }
-                if (!MBConfig.Modded)
-                {
-                    str.AppendLines(1);
-                    str.AppendClr("           Please join a modded room!", "A01515").EndColor().AppendLine();
-                }
-            });
+                str.AppendLines(1).BeginCenter();
+                str.AppendClr("Please join a modded room!", "A01515").EndColor().EndAlign().AppendLine();
+            }
+
+            Text = str.ToString();
         }
 
         private void OnEntrySelected(int index)
@@ -80,7 +71,7 @@ namespace MonkeBazooka.ComputerInterface
                         break;
                     case 1:
                         if (MBConfig.Modded)
-                            BazookaManager.Instance.UpdateLeft();
+                            BazookaManager.Instance.UpdateHandState();
                         UpdateScreen();
                         break;
                 }
@@ -95,19 +86,19 @@ namespace MonkeBazooka.ComputerInterface
                 UpdateScreen();
                 return;
             }
-            
-            switch(selectionHandler.CurrentSelectionIndex)
+
+            switch (selectionHandler.CurrentSelectionIndex)
             {
                 case 1:
                     switch (key)
                     {
                         case EKeyboardKey.Left:
                             if (MBConfig.Modded)
-                                BazookaManager.Instance.UpdateLeft();
+                                BazookaManager.Instance.UpdateHandState();
                             break;
                         case EKeyboardKey.Right:
                             if (MBConfig.Modded)
-                                BazookaManager.Instance.UpdateLeft();
+                                BazookaManager.Instance.UpdateHandState();
                             break;
                     }
                     UpdateScreen();

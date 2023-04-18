@@ -8,34 +8,33 @@ namespace MonkeBazooka.Core
 {
 	public class BazookaManager : MonoBehaviourPunCallbacks
 	{
+		public static BazookaManager Instance { get; private set; }
 
 		public bool initialized = false;
 
-		public static BazookaManager Instance { get; private set; }
-
-		private void Awake()
+		internal void Awake()
 		{
 			if (Instance != null && Instance != this)
 				Destroy(this);
 			else
 				Instance = this;
-            
+
 			if (!initialized)
 				Initialize();
 		}
-        
+
 		public void Toggle(bool thing)
 		{
 			if (MBConfig.Modded)
 			{
 				switch (thing)
-				{       
+				{
 					case true:
 						MBUtils.Bazooka.SetActive(true);
 						MBUtils.BazookaController.enabled = true;
 						UpdateHand();
 						break;
-                        
+
 					case false:
 						UpdateHand();
 						MBUtils.Bazooka.SetActive(false);
@@ -43,8 +42,8 @@ namespace MonkeBazooka.Core
 						break;
 				}
 			}
-            else
-            {
+			else
+			{
 				UpdateHand();
 				MBUtils.Bazooka.SetActive(false);
 				MBUtils.BazookaController.enabled = false;
@@ -57,16 +56,16 @@ namespace MonkeBazooka.Core
 			Toggle(MBConfig.Enabled);
 		}
 
-        public void UpdateLeft()
-        {
-            MBConfig.Left = !MBConfig.Left;
+		public void UpdateHandState()
+		{
+			MBConfig.Left = !MBConfig.Left;
 			Toggle(MBConfig.Enabled);
 		}
 
-        public void UpdateForce(bool isPlus)
-        {
-            switch(isPlus)
-            {
+		public void UpdateForce(bool isPlus)
+		{
+			switch (isPlus)
+			{
 				case true:
 					if (MBConfig.ExplosionForce >= 15) break;
 					MBConfig.ExplosionForce += 0.5f;
@@ -76,14 +75,14 @@ namespace MonkeBazooka.Core
 					MBConfig.ExplosionForce -= 0.5f;
 					break;
 			}
-            
+
 			MBConfig.ExplosionForce = Mathf.Round(MBConfig.ExplosionForce * 10.0f) * 0.1f;
 		}
 
-        public void UpdateHand()
-        {
+		public void UpdateHand()
+		{
 			Transform BazookaTransform = MBUtils.Bazooka.transform;
-            
+
 			if (MBConfig.Left)
 			{
 				BazookaTransform.SetParent(MBUtils.LeftHandTransform, false);
@@ -100,25 +99,23 @@ namespace MonkeBazooka.Core
 			}
 		}
 
-        public void Initialize()
+		public void Initialize()
 		{
 			Debug.Log("Initializing MonkeBazooka...");
-            
+
 			if (!initialized)
 			{
 				Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("MonkeBazooka.Resources.launcher");
 				AssetBundle assetBundle = AssetBundle.LoadFromStream(manifestResourceStream);
-                
-				MBUtils.BazookaPrefab = assetBundle.LoadAsset<GameObject>("Launcher");
-				MBUtils.MissilePrefab = assetBundle.LoadAsset<GameObject>("realMissile");
-				MBUtils.ExplosionPrefab = assetBundle.LoadAsset<GameObject>("explosion");
-                
-				MBUtils.Bazooka = Instantiate<GameObject>(MBUtils.BazookaPrefab);
+
+				MBUtils.BazookaPrefab = assetBundle.LoadAsset("Launcher") as GameObject;
+				MBUtils.MissilePrefab = assetBundle.LoadAsset("realMissile") as GameObject;
+				MBUtils.ExplosionPrefab = assetBundle.LoadAsset("explosion") as GameObject;
+
+				MBUtils.Bazooka = Object.Instantiate(MBUtils.BazookaPrefab);
 				MBUtils.BazookaController = MBUtils.Bazooka.AddComponent<BazookaController>();
-                
+
 				assetBundle.Unload(false);
-				assetBundle = null;
-				manifestResourceStream = null;
 
 				if (!MBUtils.LeftHandTransform)
 					MBUtils.GetVariables();
@@ -130,20 +127,19 @@ namespace MonkeBazooka.Core
 
 					Debug.Log("Successfully initialized MonkeBazooka.");
 				}
-                else
-                {
+				else
+				{
 					initialized = false;
-                    
+
 					Debug.Log("Failed to initialize MonkeBazooka.");
 				}
 			}
 			else
-            {
-				if (MBUtils.Bazooka != null)
-					Toggle(MBConfig.Enabled);
-                
-                Debug.Log($"MonkeBazooka already initialized setting Bazooka to {(MBConfig.Enabled ? "active." : "disabled.")}");
-            }
+			{
+				if (MBUtils.Bazooka != null) Toggle(MBConfig.Enabled);
+
+				Debug.Log($"MonkeBazooka already initialized setting Bazooka to {(MBConfig.Enabled ? "active." : "disabled.")}");
+			}
 		}
 	}
 }

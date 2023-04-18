@@ -13,39 +13,36 @@ namespace MonkeBazooka.Core
         public Transform raycastPoint;
 
         public AudioSource MissileSpeaker;
-        
-        void Awake()
+
+        internal void Awake()
         {
             if (MissileRigidbody == null)
             {
                 MissileRigidbody = GetComponent<Rigidbody>();
             }
-            
+
             MissileSpeaker = GetComponentInChildren<AudioSource>();
 
             raycastPoint = transform.Find("raycastPoint");
 
             GorillaPlayer = GorillaLocomotion.Player.Instance.gameObject;
-            PlayerRigidBody = GorillaPlayer.GetComponent<Rigidbody>();         
-            
+            PlayerRigidBody = GorillaPlayer.GetComponent<Rigidbody>();
+
             MissileRigidbody.velocity = GorillaLocomotion.Player.Instance.GetComponent<Rigidbody>().velocity * 0.9f;
-            
+
             Destroy(gameObject, 5.99f);
-            
+
             MissileSpeaker.PlayOneShot(MissileSpeaker.clip);
         }
 
-        void FixedUpdate()
+        internal void FixedUpdate()
         {
             Collider[] CollidedObjects = Physics.OverlapBox(transform.position, BazookaController.missileSize, transform.rotation, MBUtils.MissileLayerMask);
-            if (CollidedObjects.Length > 0)
-            {
-                Explode();
-            }
+            if (CollidedObjects.Length > 0) Explode();
             MissileRigidbody.AddForce(-transform.right * BazookaController.MissileSpeed, ForceMode.VelocityChange);
         }
 
-        void Explode()
+        private void Explode()
         {
             GameObject ClonedExplosion = Instantiate<GameObject>(MBUtils.ExplosionPrefab, transform.position, transform.rotation);
             Knockback();
@@ -53,14 +50,14 @@ namespace MonkeBazooka.Core
             Destroy(gameObject);
         }
 
-        void Knockback()
+        private void Knockback()
         {
             LayerMask KnockbackLayerMask = LayerMask.GetMask("Gorilla Body Collider");
             Collider[] NearbyColliders = Physics.OverlapSphere(transform.position, BazookaController.ExplosionRadius, KnockbackLayerMask);
-            
+
             foreach (Collider Collider in NearbyColliders)
             {
-                if(Collider.gameObject.name == "Body Collider")
+                if (Collider.gameObject.name.Contains("Body") || Collider.gameObject == GorillaLocomotion.Player.Instance.bodyCollider)
                 {
                     PlayerRigidBody.AddExplosionForce(MBConfig.ExplosionForce * 10000, transform.position, BazookaController.ExplosionRadius);
                 }
